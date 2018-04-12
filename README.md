@@ -1,2 +1,2 @@
 # Akustik
-Design speaker cabinets and other acoustical analysis
+Design speaker cabinets and analysis of other acoustical objects.
