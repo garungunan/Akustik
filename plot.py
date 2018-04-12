@@ -16,7 +16,7 @@ def ex1():
     plt.show()
 
 def ex_subplot():
-jgdhajsdgsjadyvjfsakf
+
     def plot():
         X = np.linspace(-pi, pi, 256, endpoint=True)
         C, S = cos(X), sin(X)
