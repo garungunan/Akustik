@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from mpl_toolkits.mplot3d import Axes3D
 from numpy import *
 from sys import argv
 
@@ -98,3 +99,32 @@ def ex2():
     plt.legend(loc='upper left', frameon=False)
     # Show result on screen
     plt.show()
+
+def ex3():
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    #arange: return array of evenly spaced values
+    X = np.arange(-4, 4, 0.25)
+    Y = np.arange(-4, 4, 0.25)
+    #meshgrid: return a set of matched arrays(vectors)
+    X, Y, = np.meshgrid(X, Y)
+    R = np.sqrt(X**2 + Y**2)
+    Z = np.sin(R)
+    #3D plot
+    ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='spring')
+    #2D plot
+    ax.contourf(X, Y, Z, zdir='z', offset=-2, cmap='rainbow')
+    ax.set_zlim(-2, 2)
+
+    plt.show()
+
+def plot3D(X, Y, Z):
+        fig = plt.figure()
+        ax = Axes3D(fig)
+        X, Y, = np.meshgrid(X, Y)
+
+        ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap='spring')
+        #ax.contourf(X, Y, Z, zdir='z', offset=-2, cmap='rainbow')
+        ax.set_zlim(min(Z), max(Z))
+
+        plt.show()
