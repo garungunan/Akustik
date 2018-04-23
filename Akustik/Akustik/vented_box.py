@@ -26,3 +26,54 @@ idealBox = ideal_Vented_Box(Qts, Vas, Fs)
 print(idealBox)
 realisticBox = Vented_box_given_Vb(Vb,Vas,Fs,Qts)
 print(realisticBox)
+
+def calc_Q_B(Q_L=7, Q_A=1, Q_P=1):
+    '''Q_L: box leakage loss, Q_A: dampening loss, Q_P: port loss'''
+    return 1 / ( 1 / Q_L + 1 / Q_A + 1 / Q_P)
+
+
+def calc_Q_L(fs, Qms, Qes, Qts, Re, fB, fL, fH, R0):
+    '''Return the Q value of enclosure losses.'''
+
+    def calc_fsb(fL, fH, fB):
+        '''fB: resonant box frequency, fH: frequency at high peak of enclosure impedance curve. fL: lower peak of enclosure impedance curve.'''
+        return (fL * fH) / fB
+
+    def calc_Im(R0, Re):
+        '''R0: impedance at fB, Re: resistive impedance of voicecoil'''
+        return Re / R0
+
+    def calc_Qmsb(fs, fsb, Qms):
+        '''fs:resonant freq. of speaker, Qms: mech. Q value'''
+        return (fs / fsb) * Qms
+
+    def calc_Qesb(fe, fsb, Qes):
+        return calc_Qmsb(fe, fsb, Qes)
+
+    def calc_Qtsb(fe, fsb, Qts):
+        return calc_Qmsb(fs, fsb, Qts)
+
+    def calc_ha(fb, fsb):
+        return fb / fsb
+
+    def calc_alpha(fb, fH, fL):
+        a = fb**2
+        b = fH**2
+        c = fL**2
+        return ((b-a)*(a-c)) / (b*c)
+
+    fsb = calc_fsb(fL, fH, fb)
+    ha = calc_ha(fb, fsb)
+    alpha = calc_alpha(fb, fH, fL)
+    Qesb = calc_Qesb(fe, fsb, Qes)
+    Qmsb = calc_Qmsb(fe, fsb, Qms)
+    Im = calc_Im(R0, Re)
+    Q_L = (ha/alpha) * ((1/(Qesb*(Im-1))) - (1/Qmsb))
+
+    return Q_L
+
+
+def calculate_Vb(Qts, ):
+
+
+    return Vb
