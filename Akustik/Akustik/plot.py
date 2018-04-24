@@ -4,6 +4,7 @@ from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from numpy import *
 from sys import argv
+import Akustik_class
 
 
 
@@ -128,3 +129,20 @@ def plot3D(X, Y, Z):
         ax.set_zlim(min(Z), max(Z))
 
         plt.show()
+
+def plot_freq_response_vented_box(Loudspeaker,
+                                    Enclousure, Freq_range):
+    '''Plot the frequency response of a speaker system with a
+        vented box, Freq_range: a touple'''
+    dBmagData = [x for x in range(len(Freq_range))]
+    x = 0
+    Vb = Loudspeaker.transducer.Vb
+    Vas = Loudspeaker.transducer.Vas
+    Fs = Loudspeaker.transducer.Fs
+    Qts = Loudspeaker.transducer.Qts
+    Fb = Loudspeaker.transducer.Fb
+    Ql = Loud
+    for f in Freq_range:
+        dBmadData[x] = freq_response_vented_box(Vb, Vas, Fs, Qts, Fb, Ql, F)
+    plt.plot(dBmagData, Freq_range)
+    plt.show()
