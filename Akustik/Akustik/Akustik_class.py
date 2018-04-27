@@ -64,6 +64,13 @@ class Enclosure:
     def rho_eff(self):
         return
 
+def calc_Vd(Loudspeaker):
+    Xmax = Loudspeaker.transducer.
+    Vd = Loudspeaker.transducer.
+
+
+
+
 if __name__ == '__main__':
     fane = Loudspeaker("Fane", "Sovereign 15-250")
     print(fane)

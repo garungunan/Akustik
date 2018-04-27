@@ -18,6 +18,16 @@ def Vented_box_given_Vb(Vb, Vas, Fs, Qts, decimal=2):
     return {'Fmin3dB': Fmin3dB, 'Fb':Fb, 'peakOrDip': peakOrDip}
 
 
+def calc_Fb_ver1(Vd, Dmin, Np):
+    ''' Vd[m^3]: maximum air volume displacement by cone excursion
+        Dmin[m]: minimun vent port diameter
+        Np:number of port or vents
+        Taken from
+        "https://www.ajdesigner.com/phpsubwoofervented/port_minimum_diameter_equation_fb.php"'''
+    Fb = Vd**2 / ((Dmin * n.sqrt(Np)) / 2030)**4
+    return Fb
+
+
 def calc_Q_B(Ql=7, Qa=1, Qp=1):
     '''Ql: box leakage loss, Qa: dampening loss, Qp: port loss'''
     return 1 / ( 1 / Ql + 1 / Qa + 1 / Qp)
@@ -69,6 +79,47 @@ def calculate_Vb(Qts, ):
 
 
     return Vb
+
+
+def calc_omegaB(Map, Cab):
+    ''''Enclosure resonance frequency'''
+    return 1/n.sqrt(Map * Cab)
+
+
+def calc_omegaS(Mac, Cas):
+    '''Loudspeaker resonance frequency'''
+    return calc_omegaB(Mac, Cas)
+
+def calc_omega0(omegaB, omegaS):
+    return .sqrt(omegab * omegaS)
+
+
+def calc_h(omegaB, omegaS):
+    '''Helmholtz tuning ratio'''
+    return omegaB / omegaS
+
+def calc_alp(Vas, Vab):
+    '''Compliance/volume ratio, Cas/Cab alt. Vas/Vab'''
+    return Vas / Vab
+
+def calc_Ql_ver2(Ral, Cab, Map):
+    '''Quality factor: loss'''
+    return Ral * n.sqrt(Cab / Map)
+
+
+def calc_Qts(Rae, Ras, Mac, Cas):
+    1 / (Rae + Ras) * n.sqrt(Mac / Cas)
+
+def a1(Ql, h, Qts):
+    '''constant a1, for the 1n pole in the '''
+    root_h = n.sqrt(h)
+    return 1 / (Ql * root_h) + root_h / Qts
+
+def a2(alp, h, Ql, Qts):
+    return (alp + 1) / h + h + 1 / (Ql * Qts)
+
+
+
 
 def freq_response_vented_box(Vb, Vas, Fs, Qts, Fb, Ql, F):
     Fn2 = (F / Fs)**2
