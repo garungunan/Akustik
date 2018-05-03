@@ -45,3 +45,21 @@ def calc_fs(C_ms, M_ms):
         F_s[Hz], C_ms[mm/N], M_mms[g]'''
     F_s = 50 * pi * sqrt( 1 / (C_ms * M_ms) )
     return F_s
+
+
+def calc_Rms(Fs, Mms, Qms):
+    return (2 * n.pi * Fs * Mms) / (Qms)
+
+
+def EBP(Fs, Qes):
+    '''Efficiency Bandwidth Product, a guideline to suitable enclousure for a
+        given loudspeaker'''
+    ebp = Fs / Qes
+    answer = ['closed box', 'vented box']
+    reply = " The loudspeaker is suitable for a {}."
+    if ebp > 100:
+        print("EBP: ", ebp, reply.format(answer[1])
+    elif ebp < 50:
+        print("EBP: ", ebp, reply.format(answer[0]))
+    else:
+        print("EBP: ", ebp, reply.format("both " + answer[0] + "and" + answer[1]))

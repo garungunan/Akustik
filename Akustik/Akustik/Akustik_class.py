@@ -65,8 +65,8 @@ class Enclosure:
         return
 
 def calc_Vd(Loudspeaker):
-    Xmax = Loudspeaker.transducer.
-    Vd = Loudspeaker.transducer.
+    Xmax = Loudspeaker.transducer.Xmax
+    Vd = Loudspeaker.transducer.Vd
 
 
 

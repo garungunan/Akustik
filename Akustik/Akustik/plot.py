@@ -4,7 +4,10 @@ from matplotlib.animation import FuncAnimation
 from mpl_toolkits.mplot3d import Axes3D
 from numpy import *
 from sys import argv
+from scipy import signal
 import Akustik_class
+import vented_box
+
 
 
 
@@ -119,6 +122,15 @@ def ex3():
 
     plt.show()
 
+
+def ex4():
+    omega0 = 45
+    a1 = vented_box.a1_butter()
+    a2 = vented_box.a2_butter()
+    a3 = vented_box.a3_butter()
+    tf = vented_box.transfer_function(omega0, a1, a2, a3)
+    bodeplot(tf)
+
 def plot3D(X, Y, Z):
         fig = plt.figure()
         ax = Axes3D(fig)
@@ -145,4 +157,13 @@ def plot_freq_response_vented_box(Loudspeaker,
     for f in Freq_range:
         dBmadData[x] = freq_response_vented_box(Vb, Vas, Fs, Qts, Fb, Ql, F)
     plt.plot(dBmagData, Freq_range)
+    plt.show()
+
+
+def bodeplot(transfer_function):
+    w, mag, phase = signal.bode(transfer_function)
+    plt.figure()
+    plt.semilogx(w, mag)
+    plt.figure()
+    plt.semilogx(w, phase)
     plt.show()
